@@ -52,6 +52,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define ENCODERS_PAD_B { B3 }
 #define ENCODER_RESOLUTION 4
 #define TAPPING_TERM 200
+#define IGNORE_MOD_TAP_INTERRUPT
 
 /*
  * Split Keyboard specific options, make sure you have 'SPLIT_KEYBOARD = yes' in your rules.mk, and define SOFT_SERIAL_PIN.
