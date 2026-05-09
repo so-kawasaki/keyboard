@@ -35,6 +35,7 @@ jobs:
       - name: Install Python dependencies
         run: |
           python3 -m pip install --upgrade pip
+          pip install qmk
           pip install -r qmk_firmware/requirements.txt
 
       - name: Copy keyboard and quantum files
