@@ -20,7 +20,7 @@ jobs:
       - name: Checkout Destination Repository (qmk_firmware)
         uses: actions/checkout@v3
         with:
-          repository: darakuneko/qmk_firmware
+          repository: so-kawasaki/qmk_firmware
           path: qmk_firmware
           token: ${{ secrets.ACTIONS_TOKEN }}
 
@@ -47,7 +47,7 @@ jobs:
       - name: Checkout Destination Repository (vial-qmk)
         uses: actions/checkout@v3
         with:
-          repository: darakuneko/vial-qmk
+          repository: so-kawasaki/vial-qmk
           path: vial-qmk
           token: ${{ secrets.ACTIONS_TOKEN }}
 
