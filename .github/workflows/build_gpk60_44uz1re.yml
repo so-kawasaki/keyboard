@@ -1,0 +1,59 @@
+name: Build GPK60-44UZ1RE Firmware
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "qmk/gpk60_44uz1re/**"
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout keyboard repository
+        uses: actions/checkout@v4
+
+      - name: Checkout QMK Firmware 0.16.9
+        uses: actions/checkout@v4
+        with:
+          repository: qmk/qmk_firmware
+          ref: 0.16.9
+          path: qmk_firmware
+
+      - name: Initialize required submodules
+        run: |
+          cd qmk_firmware
+          git submodule update --init lib/lufa
+          git submodule update --init lib/printf
+
+      - name: Install AVR toolchain
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gcc-avr avr-libc binutils-avr
+
+      - name: Install Python dependencies
+        run: |
+          python3 -m pip install --upgrade pip
+          pip install -r qmk_firmware/requirements.txt
+
+      - name: Copy keyboard and quantum files
+        run: |
+          mkdir -p qmk_firmware/keyboards/gpk60_44uz1re
+          cp -r qmk/gpk60_44uz1re/keyboards/. qmk_firmware/keyboards/gpk60_44uz1re/
+          cp -f qmk/gpk60_44uz1re/quantum/via.c qmk_firmware/quantum/via.c
+          cp -f qmk/gpk60_44uz1re/quantum/via.h qmk_firmware/quantum/via.h
+          cp -f qmk/gpk60_44uz1re/quantum/qmk_rc.h qmk_firmware/quantum/qmk_rc.h
+
+      - name: Build firmware
+        run: |
+          cd qmk_firmware
+          make gpk60_44uz1re:default
+
+      - name: Upload firmware artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: gpk60_44uz1re_default
+          path: qmk_firmware/gpk60_44uz1re_default.hex
