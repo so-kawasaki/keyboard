@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main
-      
+
 jobs:
   sync:
     runs-on: ubuntu-latest
@@ -32,17 +32,16 @@ jobs:
 
       - name: Copy Files to qmk_firmware
         run: |
-          rsync -av --exclude='*.zip' --update keyboard/qmk/ qmk_firmware/users/
-          
+          rsync -av --exclude='*.zip' --update keyboard/qmk/users/ qmk_firmware/users/
+
       - name: Commit and Push Changes to qmk_firmware
         run: |
           cd qmk_firmware
           git config user.name "GitHub Action"
           git config user.email "action@github.com"
           git add .
-          git commit -m "Sync files from keyboard/qmk" || echo "No changes to commit"
+          git commit -m "Sync files from keyboard/qmk/users" || echo "No changes to commit"
           git push --force origin feature/keyboard-firmware
-
 
       # Checkout Destination Repository (vial-qmk)
       - name: Checkout Destination Repository (vial-qmk)
@@ -60,7 +59,7 @@ jobs:
 
       - name: Copy Files to vial-qmk
         run: |
-          rsync -av --exclude='*.zip' --update keyboard/qmk/ vial-qmk/users/
+          rsync -av --exclude='*.zip' --update keyboard/qmk/users/ vial-qmk/users/
 
       - name: Commit and Push Changes to vial-qmk
         run: |
@@ -68,6 +67,5 @@ jobs:
           git config user.name "GitHub Action"
           git config user.email "action@github.com"
           git add .
-          git commit -m "Sync files from keyboard/qmk" || echo "No changes to commit"
+          git commit -m "Sync files from keyboard/qmk/users" || echo "No changes to commit"
           git push --force origin feature/keyboard-firmware
-
