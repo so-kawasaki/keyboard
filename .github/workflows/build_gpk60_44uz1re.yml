@@ -4,8 +4,6 @@ on:
   push:
     branches:
       - main
-    paths:
-      - "qmk/gpk60_44uz1re/**"
   workflow_dispatch:
 
 jobs:
